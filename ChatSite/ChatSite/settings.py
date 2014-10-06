@@ -9,9 +9,19 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 """
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-import os
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
+# Creating a database file: ./manage.py syncdb ( create superuser )
+# a file (database.sqlite3) will be created in the same dir as settings.py
+
+import os, sys
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
+
+sys.path.insert( 0, os.path.join( PROJECT_PATH, '' ) )
+
+TEMPLATE_DIRS = (
+   PROJECT_PATH + '/registration/templates/',
+   )
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
@@ -49,7 +59,7 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'ChatSite.urls'
 
-WSGI_APPLICATION = 'ChatSite.wsgi.application'
+#WSGI_APPLICATION = 'ChatSite.wsgi.application'
 
 
 # Database
@@ -58,7 +68,8 @@ WSGI_APPLICATION = 'ChatSite.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': os.path.join(PROJECT_PATH, 'database.sqlite3'), # Or path to database file if using sqlite3.
+        #1'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
