@@ -1,7 +1,3 @@
-#!/usr/bin/env python
-# Copyright (c) 2014 Arista Networks, Inc.  All rights reserved.
-# Arista Networks, Inc. Confidential and Proprietary.
-
 from django.conf.urls import patterns, include, url
 from django.contrib.auth import views as auth_views
 
