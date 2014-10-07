@@ -8,8 +8,11 @@ from django.http import HttpResponseRedirect
 from django.views.decorators.debug import sensitive_post_parameters
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
-from django.contrib.auth import REDIRECT_FIELD_NAME
+from django.contrib.auth import REDIRECT_FIELD_NAME, login as auth_login, logout as auth_logout, get_user_model
 from django.contrib.auth.forms import AuthenticationForm
+from django.utils.http import is_safe_url
+from django.conf import settings
+
 
 @sensitive_post_parameters()
 @csrf_protect
@@ -25,7 +28,14 @@ def login(request, template_name='registration/login.html',
     print "logged in" if request.user.is_authenticated() else "not logged in"
 
     import pdb;pdb.set_trace()
+    
     redirect_to = request.REQUEST.get(redirect_field_name, '')
+    if not redirect_to:
+       redirect_to = extra_context.get( 'next', '' ) # next is passed in urls.py
+
+    if request.user.is_authenticated():
+       return HttpResponseRedirect(redirect_to)
+
     if request.method == "POST":
         form = authentication_form(request, data=request.POST)
         if form.is_valid():
