@@ -1,4 +1,5 @@
 {% include "registration/fastCss.css" %}
+{% load staticfiles %}
 
 <div class="main content clearfix">
   <div class="banner">
@@ -11,7 +12,7 @@
   </div>
   <div class="card signin-card clearfix">
     <div id="cc_iframe_parent"></div>
-    <img class="profile-img" src="https://ssl.gstatico.com/accounts/ui/avatar_2x.png" alt="">
+    <img class="profile-img" src="static/registration/avatar_2x.png" alt="">
     <p class="profile-name"></p>
     <form novalidate method="post" action="" id="gaia_loginform">{% csrf_token %}
       <input name="next" type="hidden" value={{ next }}>

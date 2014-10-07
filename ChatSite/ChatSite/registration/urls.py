@@ -1,5 +1,6 @@
 from django.conf.urls import patterns, include, url
 from django.contrib.auth import views as auth_views
+from django.conf import settings
 
 from registration.forms import LoginForm
 import registration.views as views
@@ -18,4 +19,10 @@ urlpatterns = patterns( '',
                             {},
                             name='main'),
                         )
+# this will add a search to app/static files such as images
+# will not work in production
+if settings.DEBUG:
+   urlpatterns += [ 
+      url( r'^(?P<path>.*)$', 'django.views.static.serve', 
+          { 'document_root' : settings.PROJECT_PATH + '/registration'}) ]
 
