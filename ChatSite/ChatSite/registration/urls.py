@@ -10,7 +10,7 @@ urlpatterns = patterns( '',
                             views.login, # callback when the url is hit.
                             # will create template context and call 
                             # create the template with TemplateResponse.
-                            {'template_name': 'registration/login.html',
+                            {'template_name': 'registration/index.html',
                              'extra_context': { 'next': 'main' }, 
                              },
                             name='auth_login'),

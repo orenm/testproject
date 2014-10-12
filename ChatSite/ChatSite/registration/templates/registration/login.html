@@ -1,6 +1,12 @@
 {% include "registration/fastCss.css" %}
 {% load staticfiles %}
 
+{% if user.is_authenticated %}
+   You are logged in
+{% else %}
+   You are not logged in
+{% endif %}
+
 <div class="main content clearfix">
   <div class="banner">
     <h1>
