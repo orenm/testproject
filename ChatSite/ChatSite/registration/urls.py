@@ -6,18 +6,18 @@ from registration.forms import LoginForm
 import registration.views as views
 
 urlpatterns = patterns( '', 
-                        url(r'^$',
+                        url(r'^$|^login$',
                             views.login, # callback when the url is hit.
                             # will create template context and call 
                             # create the template with TemplateResponse.
                             {'template_name': 'registration/index.html',
-                             'extra_context': { 'next': 'main' }, 
+                             'extra_context': { 'next': 'index' }, 
                              },
                             name='auth_login'),
-                        url(r'^main$',
-                            views.main,
+                        url(r'^logout$',
+                            views.logout,
                             {},
-                            name='main'),
+                            name='logout'),
                         )
 # this will add a search to app/static files such as images
 # will not work in production

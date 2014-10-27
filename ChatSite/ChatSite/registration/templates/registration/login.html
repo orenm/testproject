@@ -1,11 +1,11 @@
+{% extends "registration/registration_base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Login" %}{% endblock %}
+{% block content %}
+{% url 'auth_password_reset' as auth_pwd_reset_url %}
+{% url 'registration_register' as register_url%}
 {% include "registration/fastCss.css" %}
 {% load staticfiles %}
-
-{% if user.is_authenticated %}
-   You are logged in
-{% else %}
-   You are not logged in
-{% endif %}
 
 <div class="main content clearfix">
   <div class="banner">
@@ -20,51 +20,19 @@
     <div id="cc_iframe_parent"></div>
     <img class="profile-img" src="static/registration/avatar_2x.png" alt="">
     <p class="profile-name"></p>
-    <form novalidate method="post" action="" id="gaia_loginform">{% csrf_token %}
-      <input name="next" type="hidden" value={{ next }}>
-      <input name="GALX" type="hidden"
-             value="-oQ55Eo3seQ">
-      <input name="continue" type="hidden" value="https://www.google.com/?authuser=0">
-      <input name="sacu" type="hidden" value="1">
-      <input type="hidden" id="_utf8" name="_utf8" value="&#9731;"/>
-      <input type="hidden" name="bgresponse" id="bgresponse" value="js_disabled">
-      <input type="hidden" id="pstMsg" name="pstMsg" value="0">
-      <input type="hidden" id="dnConn" name="dnConn" value="">
-      <input type="hidden" id="checkConnection" name="checkConnection" value="">
-      <input type="hidden" id="checkedDomains" name="checkedDomains"
-             value="youtube">
-      <label class="hidden-label" for="Email">Email</label>
-      <input id="username" name="username" type="email"
-             placeholder="username"
-             value=""
-             spellcheck="false"
-             class="">
-      <label class="hidden-label" for="Passwd">Password</label>
-      <input id="password" name="password" type="password"
-             placeholder="password"
-             class="">
+    <form method="post" action="{% url 'auth_login' %}" id="gaia_loginform">{% csrf_token %}
+      <input id="username" name="username" type="text"  placeholder="username" spellcheck="false"></input>
+      <input id="password" name="password" type="password" placeholder="password" spellcheck="false"</input>
+             {% if form.errors %}
+             <p class="error-msg">{% blocktrans %}The email or password you entered is incorrect.{% endblocktrans %}</p>
+             {% endif %}
       <input id="signIn" name="signIn" class="rc-button rc-button-submit" type="submit" value="Sign in">
-      <label class="remember">
-        <input id="PersistentCookie" name="PersistentCookie"
-               type="checkbox" value="yes"
-               checked="checked">
-        <span>
-          Stay signed in
-        </span>
-        <div class="bubble-wrap" role="tooltip">
-          <div class="bubble-pointer"></div>
-          <div class="bubble">
-            For your convenience, keep this checked. On shared devices, additional precautions are recommended.
-            <a href="https://support.google.com/accounts/?p=securesignin&hl=en" target="_blank">Learn more</a>
-          </div>
-        </div>
-      </label>
-      <input type="hidden" name="rmShown" value="1">
-      <a id="link-forgot-passwd" href="https://accounts.google.com/RecoverAccount?continue=https%3A%2F%2Fwww.google.com%2F%3Fauthuser%3D0"
-         class="need-help-reverse"
-         >
-        Need help?
-      </a>
-    </form>
+      <input type="hidden" name="next" value="{{ next }}" />
   </div>
-</div>
+  <div class="one-google">
+  <p>{% blocktrans %}<a href="{{ auth_pwd_reset_url }}">Forgot</a> your password?
+    <a href="{{ register_url }}">Need an account</a>?{% endblocktrans %}</p>
+  </div>
+
+
+{% endblock %}

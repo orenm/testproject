@@ -20,7 +20,7 @@ PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
 sys.path.insert( 0, os.path.join( PROJECT_PATH, '' ) )
 
 TEMPLATE_DIRS = (
-   PROJECT_PATH + '/registration/templates/',
+   PROJECT_PATH + '/registration/templates',
    )
 
 # Quick-start development settings - unsuitable for production

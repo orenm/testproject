@@ -12,7 +12,8 @@ from django.contrib.auth import REDIRECT_FIELD_NAME, login as auth_login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.utils.http import is_safe_url
 from django.conf import settings
-
+from django.shortcuts import get_object_or_404, render_to_response
+from django.template import RequestContext
 
 @sensitive_post_parameters()
 @csrf_protect
@@ -24,51 +25,33 @@ def login(request, template_name='registration/login.html',
     """
     Displays the login form and handles the login action.
     """
-    print "XXX"
-    print "logged in" if request.user.is_authenticated() else "not logged in"
-
-    import pdb;pdb.set_trace()
-    
-    redirect_to = request.REQUEST.get(redirect_field_name, '')
-    if not redirect_to:
-       redirect_to = extra_context.get( 'next', '' ) # next is passed in urls.py
-
     if request.user.is_authenticated():
-       return HttpResponseRedirect(redirect_to)
-
-    if request.method == "POST":
-        form = authentication_form(request, data=request.POST)
-        if form.is_valid():
-
-            # Ensure the user-originating redirection url is safe.
-            if not is_safe_url(url=redirect_to, host=request.get_host()):
-                redirect_to = resolve_url(settings.LOGIN_REDIRECT_URL)
-
-            # Okay, security check complete. Log the user in.
-            auth_login(request, form.get_user())
-
-            return HttpResponseRedirect(redirect_to)
+       return TemplateResponse(request, template_name, RequestContext(request),
+                               current_app=current_app)
     else:
-        form = authentication_form(request)
+       if request.method == "POST":
+           form = authentication_form(request, data=request.POST)
+           if form.is_valid():
+               auth_login(request, form.get_user())
+               return TemplateResponse(request, template_name, RequestContext(request),
+                                       current_app=current_app)
+       else:
+           form = authentication_form(request)
 
-    current_site = get_current_site(request)
+       current_site = get_current_site(request)
 
-    context = {
-        'form': form,
-        redirect_field_name: redirect_to,
-        'site': current_site,
-        'site_name': current_site.name,
-    }
-    if extra_context is not None:
-        context.update(extra_context)
-    return TemplateResponse(request, template_name, context,
-                            current_app=current_app)
+       context = {
+           'form': form,
+           redirect_field_name: '',#redirect_to,
+           'site': current_site,
+           'site_name': current_site.name,
+       }
+       if extra_context is not None:
+           context.update(extra_context)
+       
+       return TemplateResponse(request, template_name, context,
+                               current_app=current_app)
 
-
-def main( request, template_name='registration/main.html'):
-
-   context = {}
-
-   return TemplateResponse( request, template_name, context,
-                           current_app=None )
-
+def logout( request ):
+   auth_logout( request )
+   return HttpResponseRedirect( 'login' )

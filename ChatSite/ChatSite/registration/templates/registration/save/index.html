@@ -1,0 +1,7 @@
+{% include "registration/fastCss.css" %}
+
+{% if user.is_authenticated %}
+   {% include "registration/main.html" %}
+{% else %}
+   {% include "registration/login.html" %}
+{% endif %}
