@@ -1,3 +1,6 @@
+{% load converse %}
+{% load staticfiles %}
+
 <style>
   .top-bar-img {
   display: inline-block;
@@ -76,12 +79,12 @@
   style = document.getElementById( "signoutId" ).style;
   style.display != 'block' ? style.display = 'block' : style.display = 'none';
   }
-
   function logout() {
-  
   }
-
 </script>
+
+{% loadConversejs %}
+{% startConversejs %}
 
 <div class="top-bar">
   <div style="position:absolute;"> <!-- absolute make children div to be relative to it. The absolute position is by the parent position. In our case float:right -->
@@ -100,3 +103,4 @@
     </div>
   </div>
 </div>
+
