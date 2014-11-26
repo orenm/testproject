@@ -183,7 +183,6 @@ class BOSHClient(object):
 
         # This is XML. response_body contains the <body/> element of the
         # response.
-        import pdb;pdb.set_trace()
         response_body = ET.fromstring(data)
 
         # Get the remote Session ID
@@ -226,7 +225,6 @@ class BOSHClient(object):
         resp_root = ET.fromstring(self.send_request(body))
         challenge_node = resp_root.find('{{{0}}}challenge'.format(XMPP_SASL_NS))
 
-        import pdb;pdb.set_trace()
         if challenge_node is not None:
             return challenge_node.text
 

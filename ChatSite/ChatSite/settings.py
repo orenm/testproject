@@ -24,6 +24,11 @@ TEMPLATE_DIRS = (
    PROJECT_PATH + '/converse/templates',
    )
 
+from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
+TEMPLATE_CONTEXT_PROCESSORS += (
+   "django.core.context_processors.request", # add 'request' to template context
+   )
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
@@ -99,3 +104,8 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder', # look for static in every app directory
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
+
+# Converse settings
+CONVERSEJS_BOSH_SERVICE_URL = 'https://kuku.no-ip.org:5280/http-bind'
+CONVERSEJS_ENABLED = True
+CONVERSEJS_AUTO_REGISTER = 'kuku.no-ip.org'
