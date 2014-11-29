@@ -23,7 +23,11 @@ def showConversejs():
 from .. import conf
 from .. import boshclient
 
+import imp
+MyPass = imp.load_source( 'MyPass', '/home/oren/myPass.py' )
+
 def get_conversejs_context( context ):
+
    if not conf.CONVERSEJS_ENABLED:
       return context
 
@@ -31,9 +35,8 @@ def get_conversejs_context( context ):
    request = context.get( 'request' )
 
    jid_domain = conf.CONVERSEJS_AUTO_REGISTER
-   #jid = request.user.username + u'@' + jid_domain
-   jid = 'kuku' + u'@' + jid_domain
-   password = 'balabush'
+   jid = request.user.username + u'@' + jid_domain
+   password = MyPass.passwords.get( request.user.username, '' )
 
    bosh = boshclient.BOSHClient( jid, password, context[ 'CONVERSEJS_BOSH_SERVICE_URL' ] )
    jid, sid, rid = bosh.get_credentials()

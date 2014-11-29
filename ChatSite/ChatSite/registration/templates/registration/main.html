@@ -71,6 +71,17 @@
   height: 100px;
   width: 200px;
   text-align: left;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  min-height: 1em;
+  }
+</style>
+
+<style>
+  .ontop {
+  position: relative;
+  z-index:1000;
   }
 </style>
 
@@ -88,11 +99,11 @@
 <div class="top-bar">
   <div style="position:absolute;"> <!-- absolute make children div to be relative to it. The absolute position is by the parent position. In our case float:right -->
     <img onclick="openSignOut()" class="top-bar-img" src="static/registration/avatar_small.jpg" alt="">
-    <div id="signoutId" style="display: none;">
+    <div id="signoutId" style="display: none;" class="ontop" >
       <div class="pointer" style="border-bottom-color: #222;"></div>
       <div class="pointer" style="border-bottom-color: #fff;" ></div>
       <div class="signout-outer">
-        <div class="myinfo" ></div>
+        <div class="myinfo" >{{ user }}</div>
         <div class="signout-bottom">
           <div>
             <a class="signout-button" style="width:50; height:28;" onclick="location.href='logout'">Sign out</a>
