@@ -9,6 +9,7 @@
                 hide_muc_server: {{ CONVERSEJS_HIDE_MUC_SERVER }},
                 i18n: locales['{{ request.LANGUAGE_CODE }}'],
                 prebind: {{ CONVERSEJS_PREBIND }},
+                keepalive: false,
                 show_controlbox_by_default: {{ CONVERSEJS_SHOW_CONTROLBOX_BY_DEFAULT }},
                 xhr_user_search: {{ CONVERSEJS_XHR_USER_SEARCH }},
                 bosh_service_url: '{{ CONVERSEJS_BOSH_SERVICE_URL }}',
@@ -17,7 +18,8 @@
                 jid: '{{ jid }}',
                 sid: '{{ sid }}',
                 rid: '{{ rid }}',
-                debug: {{ CONVERSEJS_DEBUG }}
+                debug: {{ CONVERSEJS_DEBUG }},
+                xhr_user_search: false
             });
         });
     </script>

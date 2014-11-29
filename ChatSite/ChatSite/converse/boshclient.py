@@ -301,7 +301,17 @@ class BOSHClient(object):
 
         bind = ET.SubElement(iq, 'bind')
         bind.set('xmlns', XMPP_BIND_NS)
+        resource = ET.SubElement(bind, 'resource')
+        resource.text = 'bla'
+        self.send_request(body)
 
+        body = self.get_body()
+        iq = ET.SubElement( body, 'iq' )
+        iq.set( 'xmlns', JABBER_CLIENT_NS )
+        iq.set( 'id', 'session_auth_2' )
+        iq.set( 'type', 'set' )
+        session = ET.SubElement( iq, 'session' )
+        session.set( 'xmlns', 'urn:ietf:params:xml:ns:xmpp-session' )
         self.send_request(body)
 
     def request_restart(self):
