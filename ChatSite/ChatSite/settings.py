@@ -20,7 +20,8 @@ PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
 sys.path.insert( 0, os.path.join( PROJECT_PATH, '' ) )
 
 TEMPLATE_DIRS = (
-   PROJECT_PATH + '/registration/templates',
+   PROJECT_PATH + '/templates',
+#   PROJECT_PATH + '/registration/templates',
    PROJECT_PATH + '/converse/templates',
    )
 
@@ -52,6 +53,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+#    'registration',
     'converse',
 )
 
@@ -98,6 +100,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = '/var/www/chat/static/'
+
+STATICFILES_DIRS = ( './ChatSite/static', )
 
 STATICFILES_FINDERS = ( 
     'django.contrib.staticfiles.finders.FileSystemFinder',

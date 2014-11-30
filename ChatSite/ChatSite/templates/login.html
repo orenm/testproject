@@ -1,10 +1,8 @@
-{% extends "registration/registration_base.html" %}
 {% load i18n %}
-{% block title %}{% trans "Login" %}{% endblock %}
 {% block content %}
 {% url 'auth_password_reset' as auth_pwd_reset_url %}
 {% url 'registration_register' as register_url%}
-{% include "registration/fastCss.css" %}
+{% include "fastCss.css" %}
 {% load staticfiles %}
 
 <div class="main content clearfix">
@@ -18,7 +16,7 @@
   </div>
   <div class="card signin-card clearfix">
     <div id="cc_iframe_parent"></div>
-    <img class="profile-img" src="static/registration/avatar_2x.png" alt="">
+    <img class="profile-img" src="static/avatar_2x.png" alt="">
     <p class="profile-name"></p>
     <form method="post" action="{% url 'auth_login' %}" id="gaia_loginform">{% csrf_token %}
       <input id="username" name="username" type="text"  placeholder="username" spellcheck="false"></input>

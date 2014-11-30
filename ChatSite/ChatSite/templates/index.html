@@ -1,14 +1,14 @@
 {% load converse %}
 <html>
 <head>
-{% include "registration/fastCss.css" %}
+{% include "fastCss.css" %}
 {% loadConversejs %}
 </head>
 <body>
 {% if user.is_authenticated %}
-   {% include "registration/main.html" %}
+   {% include "main.html" %}
 {% else %}
-   {% include "registration/login.html" %}
+   {% include "login.html" %}
 {% endif %}
 </body>
 <html>
