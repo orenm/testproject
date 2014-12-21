@@ -55,3 +55,34 @@ def login(request, template_name='login.html',
 def logout( request ):
    auth_logout( request )
    return HttpResponseRedirect( 'login' )
+
+import ImageStreamer
+import base64
+from django.http import HttpResponse
+
+def textImage( request ):
+   image = "nothing"
+   if not ImageStreamer.stream.isConnected:
+      try:
+         ImageStreamer.stream.connect()
+      except:
+         HttpResponse( "Camera not ready" )
+   try:
+      image = base64.b64encode( ImageStreamer.stream.getNextImage() )
+   except EOFError:
+      pass
+   return HttpResponse( image )
+   
+
+def test( request ):
+   return TemplateResponse( request, 'test.html' )
+   image = 'nothing'
+   try:
+      if not ImageStreamer.stream.isConnected:
+         ImageStreamer.stream.connect()
+      image = base64.b64encode( ImageStreamer.stream.getNextImage() )
+      print image[0:100]
+   except:
+      image = 'nothing'
+      pass
+   return TemplateResponse(request, 'test.html',  { 'image_string' : image }, None )
