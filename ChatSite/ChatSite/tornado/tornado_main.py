@@ -27,17 +27,18 @@ class HelloHandler( tornado.web.RequestHandler ):
 
 
 templatesPath = os.path.join( os.path.dirname( __file__ ), 'templates' )
-import pdb;pdb.set_trace()
 
 # /echo1/index.html for page example. "/echo" is for the websocket
 
 tornado_app = tornado.web.Application(
    MyTornadoProject.EchoSockjsRouter( '/echo' ) +
+   MyTornadoProject.ImageSockjsRouter( '/vid' ) + 
    [ ( '/hello-tornado', HelloHandler ),
+     ( r'/vid/(.*)', tornado.web.StaticFileHandler, { 'path': templatesPath } ),
      ( r'/echo1/(.*)', tornado.web.StaticFileHandler, { 'path': templatesPath } ),
      ( r'/static/(.*)', tornado.web.StaticFileHandler, { 'path': '/var/www/chat/static' } ),
      ( '.*', tornado.web.FallbackHandler, dict( fallback=wsgi_app ) ),
-     ] )
+     ], debug=True )
 
 server = tornado.httpserver.HTTPServer( tornado_app )
 server.listen( options.port )

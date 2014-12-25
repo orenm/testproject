@@ -1,0 +1,85 @@
+<!doctype html>
+<html><head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="http://cdn.sockjs.org/sockjs-0.3.min.js"></script>
+    <style>
+      .box {
+          width: 300px;
+          float: left;
+          margin: 0 20px 0 20px;
+      }
+      .box div, .box input {
+          border: 1px solid;
+          -moz-border-radius: 4px;
+          border-radius: 4px;
+          width: 100%;
+          padding: 0px;
+          margin: 5px;
+      }
+      .box div {
+          border-color: grey;
+          height: 300px;
+          overflow: auto;
+      }
+      .box input {
+          height: 30px;
+      }
+      h1 {
+          margin-left: 30px;
+      }
+      body {
+          background-color: #F0F0F0;
+          font-family: "Arial";
+      }
+    </style>
+</head><body lang="en">
+    <h1>SockJS Echo example</h1>
+
+    <div id="first" class="box">
+      <img id="imgToRefresh" src="data:image/jpg;base64," /> 
+      <div></div>
+      <form><input autocomplete="off" value="Type here..."></input></form>
+    </div>
+
+    <script>
+        var sockjs_url = '/vid';
+        var sockjs = new SockJS(sockjs_url);
+        $('#first input').focus();
+        var div  = $('#first div');
+        var inp  = $('#first input');
+        var form = $('#first form');
+        var image = $('#imgToRefresh');
+        var print = function(m, p) {
+            p = (p === undefined) ? '' : JSON.stringify(p);
+            div.append($("<code>").text(m + ' ' + p));
+            div.append($("<br>"));
+            div.scrollTop(div.scrollTop()+10000);
+        };
+
+        sockjs.onmessage = function(e) {
+           if( typeof e.data == "object" && ( e.data !== null ) ) {
+               if ( "image" in e.data ) {
+                  var imageString = e.data[ "image" ];
+                  if( imageString.length < 100 ) {
+                     imageString = "iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==";
+                  }
+                  image.attr( "src", "data:image/jpg;base64," + imageString );
+               }
+           }
+           else {
+              print('[.] message', e.data);
+           }
+        };
+
+
+
+        sockjs.onopen    = function()  {print('[*] open', sockjs.protocol);};
+        sockjs.onclose   = function()  {print('[*] close');};
+        form.submit(function() {
+            print('[ ] sending', inp.val());
+            sockjs.send(inp.val());
+            inp.val('');
+            return false;
+        });
+    </script>
+</body></html>
