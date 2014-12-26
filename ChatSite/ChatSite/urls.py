@@ -2,9 +2,15 @@ from django.conf.urls import patterns, include, url
 
 from django.contrib import admin
 from django.views.generic import TemplateView
+from django.template.response import TemplateResponse
 import views
 
 admin.autodiscover()
+
+
+def DirectToTemplate( request ):
+   print "HA"
+   return TemplateResponse( request, 'vid.html' )
 
 urlpatterns = patterns(
    '',
@@ -17,5 +23,5 @@ urlpatterns = patterns(
    url( r'^logout$', views.logout, {}, name='logout' ),
    url( r'^test$', views.test, {} ,name='test' ),
    url( r'^textImage$', views.textImage, {} ,name='textImage' ),
-   
+   url( r'^video$', DirectToTemplate, {}, name='' ),
 )

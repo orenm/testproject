@@ -1,7 +1,7 @@
 <!doctype html>
 <html><head>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="http://cdn.sockjs.org/sockjs-0.3.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/0.3.4/sockjs.min.js"></script>
     <style>
       .box {
           width: 300px;
@@ -33,22 +33,15 @@
       }
     </style>
 </head><body lang="en">
-    <h1>SockJS Echo example</h1>
+    <h1 id="message" >SockJS Echo example</h1>
 
-    <div id="first" class="box">
-      <img id="imgToRefresh" src="data:image/jpg;base64," /> 
-      <div></div>
-      <form><input autocomplete="off" value="Type here..."></input></form>
-    </div>
+    <img id="imgToRefresh" src="data:image/jpg;base64," /> 
 
     <script>
         var sockjs_url = '/vid';
         var sockjs = new SockJS(sockjs_url);
-        $('#first input').focus();
-        var div  = $('#first div');
-        var inp  = $('#first input');
-        var form = $('#first form');
         var image = $('#imgToRefresh');
+        var message = $('#message');
         var print = function(m, p) {
             p = (p === undefined) ? '' : JSON.stringify(p);
             div.append($("<code>").text(m + ' ' + p));
@@ -58,28 +51,20 @@
 
         sockjs.onmessage = function(e) {
            if( typeof e.data == "object" && ( e.data !== null ) ) {
+               if ( "message" in e.data ) {
+                  message.text( e.data[ "message" ] );
+               }
                if ( "image" in e.data ) {
-                  var imageString = e.data[ "image" ];
+                  imageString = e.data[ "image" ];
                   if( imageString.length < 100 ) {
                      imageString = "iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==";
                   }
                   image.attr( "src", "data:image/jpg;base64," + imageString );
                }
-           }
-           else {
-              print('[.] message', e.data);
+           
            }
         };
-
-
-
-        sockjs.onopen    = function()  {print('[*] open', sockjs.protocol);};
-        sockjs.onclose   = function()  {print('[*] close');};
-        form.submit(function() {
-            print('[ ] sending', inp.val());
-            sockjs.send(inp.val());
-            inp.val('');
-            return false;
-        });
+        sockjs.onopen    = function()  {};
+        sockjs.onclose   = function()  {};
     </script>
 </body></html>

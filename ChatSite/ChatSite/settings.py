@@ -23,6 +23,7 @@ TEMPLATE_DIRS = (
    PROJECT_PATH + '/templates',
 #   PROJECT_PATH + '/registration/templates',
    PROJECT_PATH + '/converse/templates',
+   PROJECT_PATH + '/tornado/templates',
    )
 
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
